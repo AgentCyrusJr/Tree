@@ -1,197 +1,32 @@
 public class Tree {
 	
-	 /** 递归实现前序遍历 */  
+	// recursive method for pre-order  
     protected void preorder(TreeNode p) {  
         if (p != null) {  
-            System.out.println(p.val);;  
+            System.out.print(p.val + ",");;  
             preorder(p.left);  
             preorder(p.right);  
         }  
     }  
-  
-    /** 递归实现中序遍历 */  
+   
+    // recursive method for in-order 
     protected void inorder(TreeNode p) {  
         if (p != null) {  
             inorder(p.left);  
-            System.out.println(p.val);  
+            System.out.print(p.val + ",");  
             inorder(p.right);  
         }  
     }  
   
-    /** 递归实现后序遍历 */  
+    // recursive method for post-order
     protected void postorder(TreeNode p) {  
         if (p != null) {  
             postorder(p.left);  
             postorder(p.right);  
-            System.out.println(p.val);  
+            System.out.print(p.val+ ",");  
         }  
     }  
     
-//===========end of 10/3/2016============
-    /** 非递归实现前序遍历 */  
-    protected static void iterativePreorder(Node p) {  
-        Stack<Node> stack = new Stack<Node>();  
-        if (p != null) {  
-            stack.push(p);  
-            while (!stack.empty()) {  
-                p = stack.pop();  
-                visit(p);  
-                if (p.getRight() != null)  
-                    stack.push(p.getRight());  
-                if (p.getLeft() != null)  
-                    stack.push(p.getLeft());  
-            }  
-        }  
-    }  
-  
-    /** 非递归实现前序遍历2 */  
-    protected static void iterativePreorder2(Node p) {  
-        Stack<Node> stack = new Stack<Node>();  
-        Node node = p;  
-        while (node != null || stack.size() > 0) {  
-            while (node != null) {//压入所有的左节点，压入前访问它  
-                visit(node);  
-                stack.push(node);  
-                node = node.getLeft();  
-            }  
-            if (stack.size() > 0) {//  
-                node = stack.pop();  
-                node = node.getRight();  
-            }  
-        }  
-    }  
-  
-    /** 非递归实现后序遍历 */  
-    protected static void iterativePostorder(Node p) {  
-        Node q = p;  
-        Stack<Node> stack = new Stack<Node>();  
-        while (p != null) {  
-            // 左子树入栈  
-            for (; p.getLeft() != null; p = p.getLeft())  
-                stack.push(p);  
-            // 当前节点无右子或右子已经输出  
-            while (p != null && (p.getRight() == null || p.getRight() == q)) {  
-                visit(p);  
-                q = p;// 记录上一个已输出节点  
-                if (stack.empty())  
-                    return;  
-                p = stack.pop();  
-            }  
-            // 处理右子  
-            stack.push(p);  
-            p = p.getRight();  
-        }  
-    }  
-  
-    /** 非递归实现后序遍历 双栈法 */  
-    protected static void iterativePostorder2(Node p) {  
-        Stack<Node> lstack = new Stack<Node>();  
-        Stack<Node> rstack = new Stack<Node>();  
-        Node node = p, right;  
-        do {  
-            while (node != null) {  
-                right = node.getRight();  
-                lstack.push(node);  
-                rstack.push(right);  
-                node = node.getLeft();  
-            }  
-            node = lstack.pop();  
-            right = rstack.pop();  
-            if (right == null) {  
-                visit(node);  
-            } else {  
-                lstack.push(node);  
-                rstack.push(null);  
-            }  
-            node = right;  
-        } while (lstack.size() > 0 || rstack.size() > 0);  
-    }  
-  
-    /** 非递归实现后序遍历 单栈法*/  
-    protected static void iterativePostorder3(Node p) {  
-        Stack<Node> stack = new Stack<Node>();  
-        Node node = p, prev = p;  
-        while (node != null || stack.size() > 0) {  
-            while (node != null) {  
-                stack.push(node);  
-                node = node.getLeft();  
-            }  
-            if (stack.size() > 0) {  
-                Node temp = stack.peek().getRight();  
-                if (temp == null || temp == prev) {  
-                    node = stack.pop();  
-                    visit(node);  
-                    prev = node;  
-                    node = null;  
-                } else {  
-                    node = temp;  
-                }  
-            }  
-  
-        }  
-    }  
-  
-    /** 非递归实现后序遍历4 双栈法*/  
-    protected static void iterativePostorder4(Node p) {  
-        Stack<Node> stack = new Stack<Node>();  
-        Stack<Node> temp = new Stack<Node>();  
-        Node node = p;  
-        while (node != null || stack.size() > 0) {  
-            while (node != null) {  
-                temp.push(node);  
-                stack.push(node);  
-                node = node.getRight();  
-            }  
-            if (stack.size() > 0) {  
-                node = stack.pop();  
-                node = node.getLeft();  
-            }  
-        }  
-        while (temp.size() > 0) {  
-            node = temp.pop();  
-            visit(node);  
-        }  
-    }  
-  
-    /** 非递归实现中序遍历 */  
-    protected static void iterativeInorder(Node p) {  
-        Stack<Node> stack = new Stack<Node>();  
-        while (p != null) {  
-            while (p != null) {  
-                if (p.getRight() != null)  
-                    stack.push(p.getRight());// 当前节点右子入栈  
-                stack.push(p);// 当前节点入栈  
-                p = p.getLeft();  
-            }  
-            p = stack.pop();  
-            while (!stack.empty() && p.getRight() == null) {  
-                visit(p);  
-                p = stack.pop();  
-            }  
-            visit(p);  
-            if (!stack.empty())  
-                p = stack.pop();  
-            else  
-                p = null;  
-        }  
-    }  
-  
-    /** 非递归实现中序遍历2 */  
-    protected static void iterativeInorder2(Node p) {  
-        Stack<Node> stack = new Stack<Node>();  
-        Node node = p;  
-        while (node != null || stack.size() > 0) {  
-            while (node != null) {  
-                stack.push(node);  
-                node = node.getLeft();  
-            }  
-            if (stack.size() > 0) {  
-                node = stack.pop();  
-                visit(node);  
-                node = node.getRight();  
-            }  
-        }  
-    }
 	//get the minimal value of the tree
 	public TreeNode getMin(TreeNode root){  
         if(root==null)  
@@ -253,7 +88,29 @@ public class Tree {
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		TreeNode n0 = new TreeNode(1);
+		TreeNode n1 = new TreeNode(2);
+		TreeNode n2 = new TreeNode(2);
+		TreeNode n3 = new TreeNode(3);
+		TreeNode n4 = new TreeNode(0);
+		TreeNode n5 = new TreeNode(3);
+		TreeNode n6 = new TreeNode(0);
+		TreeNode n7 = new TreeNode(8);
+		TreeNode n8 = new TreeNode(9);
+		TreeNode n9 = new TreeNode(10);
+		
+		n0.left = n1; n0.right = n2;
+		n1.left = n3; n1.right = n4; n2.left = n5; n2.right = n6;
+		Tree tree  = new Tree();
+		System.out.println("Preorder:");
+		tree.preorder(n1);
+		System.out.println();
+		System.out.println("Inorder:");
+		tree.inorder(n1);
+		System.out.println();
+		System.out.println("Postorder:");
+		tree.postorder(n1);
+		
 	}
 
 }
