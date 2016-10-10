@@ -1,6 +1,6 @@
 public class Tree {
 	
-	// recursive method for pre-order  
+    // recursive method for pre-order  
     protected void preorder(TreeNode p) {  
         if (p != null) {  
             System.out.print(p.val + ",");;  
@@ -27,8 +27,8 @@ public class Tree {
         }  
     }  
     
-	//get the minimal value of the tree
-	public TreeNode getMin(TreeNode root){  
+    // get the minimal value of the tree
+    public TreeNode getMin(TreeNode root){  
         if(root==null)  
             return null;  
         while(root.left!=null)  
@@ -37,8 +37,8 @@ public class Tree {
     }  
 	
 	
-	//get the maximal value of the tree
-	public TreeNode getMax(TreeNode root){  
+    // get the maximal value of the tree
+    public TreeNode getMax(TreeNode root){  
         if(root==null)  
             return null;  
         while(root.right!=null)  
@@ -46,8 +46,8 @@ public class Tree {
         return root;  
     }
 	
-	//search recursively
-	public TreeNode searchRec(TreeNode root ,int val){  
+    // search recursively
+    public TreeNode searchRec(TreeNode root ,int val){  
         if(root==null)  
             return root;  
         if(val<root.val)  
@@ -58,8 +58,8 @@ public class Tree {
             return root;  
     }  
 	
-	//search in a loop
-	public TreeNode search(TreeNode root ,int val){  
+    // search in a loop
+    public TreeNode search(TreeNode root ,int val){  
         if(root==null)  
             return root;  
         while(root!=null)  
@@ -74,8 +74,8 @@ public class Tree {
         return root;  
     }  
 	
-	//insert recursively
-	public TreeNode insertRec(TreeNode root,TreeNode x){  
+    // insert recursively
+    public TreeNode insertRec(TreeNode root,TreeNode x){  
         if(root==null)  
             root=x;  
         else if(x.val<root.val)  
@@ -85,31 +85,44 @@ public class Tree {
         return root;  
     }  
 	
+    //Invert a binary tree
+    public TreeNode invertBinaryTree(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+        TreeNode temp = root.left;
+        root.left = root.right;
+        root.right = temp;
+        
+        invertBinaryTree(root.left);
+        invertBinaryTree(root.right);
+        return root;
+    }
 	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		TreeNode n0 = new TreeNode(1);
-		TreeNode n1 = new TreeNode(2);
-		TreeNode n2 = new TreeNode(2);
-		TreeNode n3 = new TreeNode(3);
-		TreeNode n4 = new TreeNode(0);
-		TreeNode n5 = new TreeNode(3);
-		TreeNode n6 = new TreeNode(0);
-		TreeNode n7 = new TreeNode(8);
-		TreeNode n8 = new TreeNode(9);
-		TreeNode n9 = new TreeNode(10);
+    public static void main(String[] args) {
+	// TODO Auto-generated method stub
+	TreeNode n0 = new TreeNode(1);
+	TreeNode n1 = new TreeNode(2);
+	TreeNode n2 = new TreeNode(2);
+	TreeNode n3 = new TreeNode(3);
+	TreeNode n4 = new TreeNode(0);
+	TreeNode n5 = new TreeNode(3);
+	TreeNode n6 = new TreeNode(0);
+	TreeNode n7 = new TreeNode(8);
+	TreeNode n8 = new TreeNode(9);
+	TreeNode n9 = new TreeNode(10);
 		
-		n0.left = n1; n0.right = n2;
-		n1.left = n3; n1.right = n4; n2.left = n5; n2.right = n6;
-		Tree tree  = new Tree();
-		System.out.println("Preorder:");
-		tree.preorder(n1);
-		System.out.println();
-		System.out.println("Inorder:");
-		tree.inorder(n1);
-		System.out.println();
-		System.out.println("Postorder:");
-		tree.postorder(n1);
+	n0.left = n1; n0.right = n2;
+	n1.left = n3; n1.right = n4; n2.left = n5; n2.right = n6;
+	Tree tree  = new Tree();
+	System.out.println("Preorder:");
+	tree.preorder(n1);
+	System.out.println();
+	System.out.println("Inorder:");
+	tree.inorder(n1);
+	System.out.println();
+	System.out.println("Postorder:");
+	tree.postorder(n1);
 		
 	}
 
